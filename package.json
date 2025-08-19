@@ -2,9 +2,23 @@
   "name": "magicslide-mcp-test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
+  "type": "module",
   "scripts": {
+    "start": "node build/index.js",
+    "build": "tsc && chmod +x build/index.js",
+    "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.6.1",
+    "@types/uuid": "^10.0.0",
+    "axios": "^1.6.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
   },
   "repository": {
     "type": "git",
@@ -13,7 +27,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Pratiksha-Kanoja/Magicslide-mcp-test/issues"
   },
