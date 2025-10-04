@@ -2,6 +2,7 @@
 runtime: typescript
 startCommand:
   commandFunction: smitheryStartCommand
+  type: stdio
   configSchema:
     type: object
     properties:
