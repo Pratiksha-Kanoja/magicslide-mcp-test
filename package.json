@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "description": "A Model Context Protocol server example",
   "private": true,
-  "type": "module",
-  "module": "./src/index.ts",
   "engines": {
     "node": ">=18 <23"
   },

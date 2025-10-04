@@ -1,14 +1,14 @@
 // src/index.ts
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
+const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
+const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
+const {
     CallToolRequestSchema,
     ErrorCode,
     ListToolsRequestSchema,
     McpError,
-} from "@modelcontextprotocol/sdk/types.js";
-import axios, { AxiosResponse } from "axios";
-import { v4 as uuidv4 } from 'uuid';
+} = require("@modelcontextprotocol/sdk/types.js");
+const axios = require("axios");
+const { v4: uuidv4 } = require('uuid');
 
 // ---------- Types for API responses ----------
 interface TranscriptResponse {
@@ -61,7 +61,7 @@ function isYoutubeUrl(text: string): boolean {
 // Function to fetch YouTube transcript
 async function fetchYoutubeTranscript(ytUrl: string): Promise<string> {
     try {
-        const response: AxiosResponse<TranscriptResponse> = await axios.post(
+        const response = await axios.post(
             YOUTUBE_TRANSCRIPT_API_URL,
             { ytUrl }
         );
@@ -86,7 +86,7 @@ async function fetchAccountInfo(
     accessId: string
 ): Promise<{ email: string; plan: string; workspace_id: string }> {
     try {
-        const response: AxiosResponse<AccountInfoResponse> = await axios.post(
+        const response = await axios.post(
             ACCOUNT_INFO_API_URL,
             { access_id: accessId },
             {
@@ -182,7 +182,7 @@ async function fetchDetailsFromAPI(
     const userParams = parseUserParameters(userText);
 
     try {
-        const response: AxiosResponse<DetailsAPIResponse> = await axios.post(
+        const response = await axios.post(
             "https://video-and-audio-description-qh4z.onrender.com/api/v1/fetch-slide-generation-data",
             { text: userText },
             { headers: { "Content-Type": "application/json" } }
@@ -300,7 +300,7 @@ async function createPPTFromText(
     console.error("Request Data:", requestData);
 
     try {
-        const response: AxiosResponse<MagicSlidesCreateResponse> = await axios.post(
+        const response = await axios.post(
             MAGICSLIDES_API_URL,
             requestData,
             { headers: { "Content-Type": "application/json" } }
@@ -369,7 +369,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     ],
 }));
 
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
+server.setRequestHandler(CallToolRequestSchema, async (request: any) => {
     if (request.params.name === "create_ppt_from_text") {
         try {
             const args = request.params.arguments as CreatePPTArgs;
@@ -447,11 +447,17 @@ Copy and paste this URL into your browser to open your presentation in the Magic
     throw new McpError(ErrorCode.MethodNotFound, "Tool not found");
 });
 
-const transport = new StdioServerTransport();
-await server.connect(transport);
+// Start the server
+(async () => {
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+})().catch((error) => {
+    console.error("Failed to start MCP server:", error);
+    process.exit(1);
+});
 
 // Exported for Smithery `commandFunction` in smithery.yaml
-export function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string }) {
+function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string }) {
     const accessId = config?.MAGICSLIDES_ACCESS_ID ?? "";
     return {
         type: "stdio",
@@ -462,3 +468,5 @@ export function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string })
         ],
     } as const;
 }
+
+module.exports = { smitheryStartCommand };

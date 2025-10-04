@@ -1,9 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // src/index.ts
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { CallToolRequestSchema, ErrorCode, ListToolsRequestSchema, McpError, } from "@modelcontextprotocol/sdk/types.js";
-import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
+const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
+const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
+const { CallToolRequestSchema, ErrorCode, ListToolsRequestSchema, McpError, } = require("@modelcontextprotocol/sdk/types.js");
+const axios = require("axios");
+const { v4: uuidv4 } = require('uuid');
 // --------------------------------------------
 // MagicSlides API Endpoints
 const MAGICSLIDES_API_URL = "https://www.magicslides.app/api/generate-editable-mcp";
@@ -307,10 +309,16 @@ Copy and paste this URL into your browser to open your presentation in the Magic
     }
     throw new McpError(ErrorCode.MethodNotFound, "Tool not found");
 });
-const transport = new StdioServerTransport();
-await server.connect(transport);
+// Start the server
+(async () => {
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+})().catch((error) => {
+    console.error("Failed to start MCP server:", error);
+    process.exit(1);
+});
 // Exported for Smithery `commandFunction` in smithery.yaml
-export function smitheryStartCommand(config) {
+function smitheryStartCommand(config) {
     const accessId = config?.MAGICSLIDES_ACCESS_ID ?? "";
     return {
         type: "stdio",
@@ -321,3 +329,4 @@ export function smitheryStartCommand(config) {
         ],
     };
 }
+module.exports = { smitheryStartCommand };
