@@ -4,8 +4,9 @@
   "description": "A Model Context Protocol server example",
   "private": true,
   "type": "module",
+  "module": "./src/index.ts",
   "engines": {
-    "node": ">=18 <22"
+    "node": ">=18 <23"
   },
   "bin": {
     "mcp-server": "build/index.js"
