@@ -17,11 +17,11 @@ COPY src ./src
 # Build the TypeScript code
 RUN npm run build
 
+# Ensure the build file is executable
+RUN chmod +x build/index.js
+
 # Remove dev dependencies to reduce image size
 RUN npm prune --omit=dev
-
-# Expose the port (though MCP typically uses stdio)
-EXPOSE 3000
 
 # Start the MCP server
 CMD ["node", "build/index.js"] 
