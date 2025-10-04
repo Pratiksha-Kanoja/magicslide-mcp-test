@@ -1,14 +1,20 @@
 {
-  "name": "magicslide-mcp-test",
-  "version": "1.0.0",
-  "description": "",
-  "main": "build/index.js",
+  "name": "mcp-server",
+  "version": "0.1.0",
+  "description": "A Model Context Protocol server example",
+  "private": true,
   "type": "module",
+  "bin": {
+    "mcp-server": "build/index.js"
+  },
+  "files": [
+    "build"
+  ],
   "scripts": {
     "start": "node build/index.js",
     "build": "tsc && chmod +x build/index.js",
     "watch": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.6.1",
@@ -20,15 +26,8 @@
     "@types/node": "^20.11.24",
     "typescript": "^5.3.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Pratiksha-Kanoja/Magicslide-mcp-test.git"
-  },
+  "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Pratiksha-Kanoja/Magicslide-mcp-test/issues"
-  },
-  "homepage": "https://github.com/Pratiksha-Kanoja/Magicslide-mcp-test#readme"
+  "license": "ISC"
 }

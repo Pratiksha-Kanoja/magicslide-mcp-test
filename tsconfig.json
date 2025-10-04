@@ -8,9 +8,7 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"]
 }

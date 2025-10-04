@@ -3,7 +3,8 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema, ErrorCode, ListToolsRequestSchema, McpError, } from "@modelcontextprotocol/sdk/types.js";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import pkg from 'uuid';
+const { v4: uuidv4 } = pkg;
 // --------------------------------------------
 // MagicSlides API Endpoints
 const MAGICSLIDES_API_URL = "https://www.magicslides.app/api/generate-editable-mcp";
@@ -168,7 +169,7 @@ async function createPPTFromText(userText, accessId) {
         includeImages: imageForEachSlide || false,
         language: language || "en",
         userEmail: email,
-        workspace_slug: workspace_id,
+        workspaceSlug: workspace_id,
         preserveText: false,
         presentationId: uuidv4(),
         webSearch: true,

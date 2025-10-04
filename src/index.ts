@@ -8,7 +8,7 @@ import {
     McpError,
 } from "@modelcontextprotocol/sdk/types.js";
 import axios, { AxiosResponse } from "axios";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 // ---------- Types for API responses ----------
 interface TranscriptResponse {
@@ -287,7 +287,7 @@ async function createPPTFromText(
         includeImages: imageForEachSlide || false,
         language: language || "en",
         userEmail: email,
-        workspace_slug: workspace_id,
+        workspaceSlug: workspace_id,
         preserveText: false,
         presentationId: uuidv4(),
         webSearch: true,

@@ -1,0 +1,63 @@
+🪄 Steps to Add Your MCP to the Registry
+1. Prepare your MCP project
+
+Make sure your MagicSlide MCP repo has:
+
+A clear README.md (what it does, install/run instructions, example config).
+
+A license file (open-source is preferred).
+
+Versioning (tag a release if possible).
+
+2. Fork the MCP Registry
+
+Go to the official MCP Registry repo
+.
+
+Click Fork (top right).
+
+Clone your fork locally.
+
+git clone https://github.com/<your-username>/registry.git
+cd registry
+
+3. Add your MCP entry
+
+In the servers/ (or appropriate category) folder of the registry, add a new JSON file describing your tool.
+Example (magicslide.json):
+
+{
+  "name": "MagicSlide MCP",
+  "description": "An MCP server for generating AI-powered slide decks.",
+  "repo_url": "https://github.com/<your-username>/magicslide-mcp",
+  "install": {
+    "package": "pip install magicslide-mcp"
+  },
+  "tags": ["slides", "presentation", "AI"]
+}
+
+
+📌 The exact schema may vary — check the registry's README
+ for the latest format.
+
+4. Commit & push your changes
+git add servers/magicslide.json
+git commit -m "Add MagicSlide MCP to registry"
+git push origin main
+
+5. Open a Pull Request
+
+Go to your fork on GitHub.
+
+Click "New Pull Request".
+
+Target the upstream mcp/registry repo.
+
+Add a short description like "Add MagicSlide MCP to registry".
+
+6. Review & merge
+
+The maintainers will review your PR.
+
+Once merged, your MagicSlide MCP will appear in github.com/mcp
+ and become discoverable.
