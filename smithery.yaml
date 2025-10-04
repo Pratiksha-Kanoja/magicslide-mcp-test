@@ -1,12 +1,7 @@
 # Smithery.ai configuration
+runtime: typescript
 startCommand:
-  type: stdio
-  command: node
-  args:
-    - build/index.js
-  env:
-    - key: MAGICSLIDES_ACCESS_ID
-      fromConfig: MAGICSLIDES_ACCESS_ID
+  commandFunction: smitheryStartCommand
   configSchema:
     type: object
     properties:

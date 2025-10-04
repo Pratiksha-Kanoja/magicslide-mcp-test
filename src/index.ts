@@ -449,3 +449,16 @@ Copy and paste this URL into your browser to open your presentation in the Magic
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
+
+// Exported for Smithery `commandFunction` in smithery.yaml
+export function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string }) {
+    const accessId = config?.MAGICSLIDES_ACCESS_ID ?? "";
+    return {
+        type: "stdio",
+        command: "node",
+        args: ["build/index.js"],
+        env: [
+            { key: "MAGICSLIDES_ACCESS_ID", value: accessId },
+        ],
+    } as const;
+}

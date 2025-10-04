@@ -3,8 +3,7 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CallToolRequestSchema, ErrorCode, ListToolsRequestSchema, McpError, } from "@modelcontextprotocol/sdk/types.js";
 import axios from "axios";
-import pkg from 'uuid';
-const { v4: uuidv4 } = pkg;
+import { v4 as uuidv4 } from 'uuid';
 // --------------------------------------------
 // MagicSlides API Endpoints
 const MAGICSLIDES_API_URL = "https://www.magicslides.app/api/generate-editable-mcp";
@@ -310,3 +309,15 @@ Copy and paste this URL into your browser to open your presentation in the Magic
 });
 const transport = new StdioServerTransport();
 await server.connect(transport);
+// Exported for Smithery `commandFunction` in smithery.yaml
+export function smitheryStartCommand(config) {
+    const accessId = config?.MAGICSLIDES_ACCESS_ID ?? "";
+    return {
+        type: "stdio",
+        command: "node",
+        args: ["build/index.js"],
+        env: [
+            { key: "MAGICSLIDES_ACCESS_ID", value: accessId },
+        ],
+    };
+}
