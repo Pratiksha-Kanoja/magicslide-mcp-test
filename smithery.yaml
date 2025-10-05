@@ -1,4 +1,3 @@
-# Smithery.ai configuration
 runtime: typescript
 startCommand:
   commandFunction: smitheryStartCommand

@@ -2,17 +2,22 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files
+# Copy only manifest first for better caching
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install deps (keep dev deps because we build in this image)
+RUN npm ci
 
-# Copy application code
+# Copy the rest
 COPY . .
 
-# Build the TypeScript application
+# Build TS
 RUN npm run build
 
-# Build with Smithery CLI
+# Build Smithery bundle (use Option A or B)
+# Option A (explicit entry):
+# RUN npx -y @smithery/cli build ./src/index.ts -o .smithery/index.cjs
+# Option B (package.json "module" field):
 RUN npx -y @smithery/cli build -o .smithery/index.cjs
+
+CMD ["node", ".smithery/index.cjs"]
