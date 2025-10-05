@@ -1,5 +1,7 @@
 # MagicSlides MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@Pratiksha-Kanoja/magicslide-mcp-test)](https://smithery.ai/server/@Pratiksha-Kanoja/magicslide-mcp-test)
+
 A server that implements the Model Context Protocol (MCP) to generate PowerPoint presentations from text, YouTube videos, or structured JSON data.
 
 ## Overview
@@ -38,6 +40,14 @@ The server exposes the following tools via the MCP protocol:
 
 - Node.js (v14 or higher)
 - npm or yarn
+
+### Installing via Smithery
+
+To install magicslide-mcp-test automatically via [Smithery](https://smithery.ai/server/@Pratiksha-Kanoja/magicslide-mcp-test):
+
+```bash
+npx -y @smithery/cli install @Pratiksha-Kanoja/magicslide-mcp-test
+```
 
 ### Installation
 
