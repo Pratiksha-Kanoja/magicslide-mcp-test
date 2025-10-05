@@ -1,27 +1,34 @@
-# Use Node.js 20 Alpine as base image
-FROM node:20-alpine
-
-# Set working directory
+# --- Dependencies + Build stage ---
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy package files first for better Docker layer caching
+# Install deps first for better layer caching
 COPY package*.json ./
-
-# Install all dependencies (including dev dependencies for TypeScript build)
 RUN npm ci
 
-# Copy TypeScript config and source code
+# Copy source and build
 COPY tsconfig.json ./
 COPY src ./src
+RUN npm run build  # expects: tsc -> outputs to /app/build
 
-# Build the TypeScript code
-RUN npm run build
+# --- Production runtime stage ---
+FROM node:20-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
 
-# Verify build output exists and is executable
-RUN ls -la build/ && test -f build/index.js && chmod +x build/index.js
+# Copy only what's needed to run
+COPY package*.json ./
+RUN npm ci --omit=dev
 
-# Remove dev dependencies to reduce image size
-RUN npm prune --omit=dev
+# Bring in compiled JS from builder
+COPY --from=builder /app/build ./build
 
-# Start the MCP server
-CMD ["node", "build/index.js"] 
+# If you need any runtime assets (views, public, etc), copy them here
+# COPY public ./public
+
+# Healthcheck (optional)
+# HEALTHCHECK --interval=30s --timeout=3s \
+#   CMD node -e "process.exit(0)"
+
+EXPOSE 3000
+CMD ["node", "build/index.js"]
