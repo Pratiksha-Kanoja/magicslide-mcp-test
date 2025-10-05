@@ -1,34 +1,18 @@
-# --- Dependencies + Build stage ---
-FROM node:20-alpine AS builder
+FROM node:20-alpine
+
 WORKDIR /app
 
-# Install deps first for better layer caching
+# Copy package files
 COPY package*.json ./
-RUN npm ci
 
-# Copy source and build
-COPY tsconfig.json ./
-COPY src ./src
-RUN npm run build  # expects: tsc -> outputs to /app/build
+# Install dependencies
+RUN npm install
 
-# --- Production runtime stage ---
-FROM node:20-alpine AS runtime
-WORKDIR /app
-ENV NODE_ENV=production
+# Copy application code
+COPY . .
 
-# Copy only what's needed to run
-COPY package*.json ./
-RUN npm ci --omit=dev
+# Build the TypeScript application
+RUN npm run build
 
-# Bring in compiled JS from builder
-COPY --from=builder /app/build ./build
-
-# If you need any runtime assets (views, public, etc), copy them here
-# COPY public ./public
-
-# Healthcheck (optional)
-# HEALTHCHECK --interval=30s --timeout=3s \
-#   CMD node -e "process.exit(0)"
-
-EXPOSE 3000
-CMD ["node", "build/index.js"]
+# Build with Smithery CLI
+RUN npx -y @smithery/cli build -o .smithery/index.cjs
