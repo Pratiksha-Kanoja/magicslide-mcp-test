@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = default_1;
 // src/index.ts
 const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
 const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
@@ -329,3 +331,16 @@ function smitheryStartCommand(config) {
     };
 }
 module.exports = { smitheryStartCommand };
+// Default export for Smithery "streamable http" scanner
+// Returns a stdio start command descriptor that Smithery can invoke
+function default_1({ config }) {
+    const accessId = config?.MAGICSLIDES_ACCESS_ID ?? "";
+    return {
+        type: "stdio",
+        command: "node",
+        args: ["build/index.js"],
+        env: [
+            { key: "MAGICSLIDES_ACCESS_ID", value: accessId },
+        ],
+    };
+}
