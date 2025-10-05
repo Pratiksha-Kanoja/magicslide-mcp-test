@@ -10,13 +10,19 @@
     "mcp-server": "build/index.js"
   },
   "files": [
-    "build"
+    "build",
+    "src",
+    "tsconfig.json",
+    "smithery.yaml",
+    "package.json",
+    "README.md"
   ],
   "scripts": {
     "start": "node build/index.js",
     "build": "tsc && chmod +x build/index.js",
     "watch": "tsc --watch",
-    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "prepack": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.6.1",
