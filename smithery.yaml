@@ -9,7 +9,7 @@ startCommand:
         type: string
         description: MagicSlides access ID for creating presentations
     required:
-      - MAGICSLIDES_ACCESS_ID
+      - [] 
 http:
   entry: .smithery/index.cjs
   # Ensure the CLI uses our stdio server; fallback to Node for local run
