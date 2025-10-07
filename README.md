@@ -103,4 +103,3 @@ npm start
  - create_ppt_from_youtubeURL
   Example: "i wanted to create presentation contain 5 slides on https://youtu.be/aO1-6X_f74M?si=4svf4F7KKG6KivCp. i want google images include ,used gpt-4 model, use template bullet-point2, my account_id: ACCOUNT_ID"
 
-
