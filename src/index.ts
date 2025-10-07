@@ -76,7 +76,20 @@ const AVAILABLE_TEMPLATES = [
     'custom-ed-10',
     'custom-ed-11',
     'custom-ed-12',
-    'ed-bullet-point1'
+    'ed-bullet-point1',
+    'custom-ed-12-noimg',
+    'custom sync 1-nonimg',
+    'custom sync 2-nonimg',
+    'custom sync 3-nonimg',
+    'custom sync 4-nonimg',
+    'custom sync 5-nonimg',
+    'custom sync 6-nonimg',
+    'custom-ed-11-nonimg',
+    'custom-ed-7-noimg',
+    'custom-ed-8-nonimg',
+    'custom-ed-9-nonimg',
+    'pitch-deck-2-noimg',
+    'pitch-deck-3-nonimg'
 ];
 
 // Function to check if a string is a YouTube URL
