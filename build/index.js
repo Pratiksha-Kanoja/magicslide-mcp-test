@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.smitheryStartCommand = smitheryStartCommand;
 exports.default = defaultServerExport;
 // src/index.ts
 const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
@@ -331,6 +330,7 @@ function smitheryStartCommand(config) {
         ],
     };
 }
+module.exports = { smitheryStartCommand };
 // Default export expected by Smithery hosted servers
 function defaultServerExport({ sessionId, config, }) {
     return smitheryStartCommand(config ?? {});

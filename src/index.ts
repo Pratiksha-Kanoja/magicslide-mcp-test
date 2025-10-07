@@ -469,7 +469,7 @@ function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string }) {
     } as const;
 }
 
-export { smitheryStartCommand };
+module.exports = { smitheryStartCommand };
 
 // Default export expected by Smithery hosted servers
 export default function defaultServerExport({
