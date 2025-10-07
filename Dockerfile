@@ -11,8 +11,6 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Now build TypeScript to build/index.js
+# Build TypeScript to build/index.js
+# Smithery will use the default export from this file
 RUN npm run build
-
-# Smithery runtime will load this via the default export
-CMD ["node", "build/index.js"]
