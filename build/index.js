@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = defaultServerExport;
 // src/index.ts
 const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
 const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
@@ -157,7 +159,7 @@ async function createPPTFromText(userText, accessId) {
     const { email, plan, workspace_id } = await fetchAccountInfo(accessId);
     let topicText = userText;
     if (isYoutubeUrl(userText)) {
-        console.log("YouTube URL detected, fetching transcript...");
+        console.error("YouTube URL detected, fetching transcript...");
         topicText = await fetchYoutubeTranscript(userText);
     }
     const { topic, slideCount, imageForEachSlide, language, model, template, image_source, } = await fetchDetailsFromAPI(topicText);
@@ -329,3 +331,7 @@ function smitheryStartCommand(config) {
     };
 }
 module.exports = { smitheryStartCommand };
+// Default export expected by Smithery hosted servers
+function defaultServerExport({ sessionId, config, }) {
+    return smitheryStartCommand(config ?? {});
+}

@@ -265,7 +265,7 @@ async function createPPTFromText(
 
     let topicText = userText;
     if (isYoutubeUrl(userText)) {
-        console.log("YouTube URL detected, fetching transcript...");
+        console.error("YouTube URL detected, fetching transcript...");
         topicText = await fetchYoutubeTranscript(userText);
     }
 
@@ -470,3 +470,14 @@ function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string }) {
 }
 
 module.exports = { smitheryStartCommand };
+
+// Default export expected by Smithery hosted servers
+export default function defaultServerExport({
+    sessionId,
+    config,
+}: {
+    sessionId?: string;
+    config: { MAGICSLIDES_ACCESS_ID?: string };
+}) {
+    return smitheryStartCommand(config ?? {});
+}
