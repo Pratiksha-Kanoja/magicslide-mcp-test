@@ -458,7 +458,7 @@ Copy and paste this URL into your browser to open your presentation in the Magic
 
 // Exported for Smithery `commandFunction` in smithery.yaml
 function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string }) {
-    const accessId = config?.MAGICSLIDES_ACCESS_ID ?? process.env.MAGICSLIDES_ACCESS_ID;
+    const accessId = config?.MAGICSLIDES_ACCESS_ID || process.env.MAGICSLIDES_ACCESS_ID;
 
     const env: { key: string; value: string }[] = [];
     if (accessId) env.push({ key: "MAGICSLIDES_ACCESS_ID", value: accessId });
