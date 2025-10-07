@@ -1,26 +1,18 @@
-FROM node:20-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
-# Ensure Alpine has libc compatibility needed by some binaries
-RUN apk add --no-cache libc6-compat
-
-# Copy only manifest first for better caching
+# Copy package files
 COPY package*.json ./
 
-# Install deps (keep dev deps because we build in this image)
+# Install dependencies only (no build yet since source files aren't copied)
 RUN npm ci
 
-# Copy the rest
+# Copy source code
 COPY . .
 
-# Build TS
+# Now build TypeScript to build/index.js
 RUN npm run build
 
-# Build Smithery bundle (use Option A or B)
-# Option A (explicit entry):
-# RUN npx -y @smithery/cli@latest build ./src/index.ts -o .smithery/index.cjs
-# Option B (package.json "module" field):
-RUN npx -y @smithery/cli@latest build -o .smithery/index.cjs
-
-CMD ["node", ".smithery/index.cjs"]
+# Smithery runtime will load this via the default export
+CMD ["node", "build/index.js"]
