@@ -458,16 +458,14 @@ Copy and paste this URL into your browser to open your presentation in the Magic
 
 // Exported for Smithery `commandFunction` in smithery.yaml
 function smitheryStartCommand(config: { MAGICSLIDES_ACCESS_ID?: string }) {
-    const accessId = config?.MAGICSLIDES_ACCESS_ID ?? process.env.MAGICSLIDES_ACCESS_ID;
-
-    const env: { key: string; value: string }[] = [];
-    if (accessId) env.push({ key: "MAGICSLIDES_ACCESS_ID", value: accessId });
-
+    const accessId = config?.MAGICSLIDES_ACCESS_ID ?? "";
     return {
         type: "stdio",
         command: "node",
-        args: ["/app/build/index.js"], // absolute path inside container
-        env,
+        args: ["build/index.js"],
+        env: [
+            { key: "MAGICSLIDES_ACCESS_ID", value: accessId },
+        ],
     } as const;
 }
 
