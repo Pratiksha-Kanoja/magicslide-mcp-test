@@ -21,6 +21,7 @@
   "scripts": {
     "start": "node build/index.js",
     "build": "tsc && chmod +x build/index.js",
+    "postinstall": "npm run build",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js",
     "prepack": "npm run build"

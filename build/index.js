@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = default_1;
 // src/index.ts
 const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
 const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
@@ -308,24 +310,21 @@ Copy and paste this URL into your browser to open your presentation in the Magic
     }
     throw new McpError(ErrorCode.MethodNotFound, "Tool not found");
 });
-// Start the server
-(async () => {
-    const transport = new StdioServerTransport();
-    await server.connect(transport);
-})().catch((error) => {
-    console.error("Failed to start MCP server:", error);
-    process.exit(1);
-});
-// Exported for Smithery `commandFunction` in smithery.yaml
-function smitheryStartCommand(config) {
-    const accessId = config?.MAGICSLIDES_ACCESS_ID ?? "";
-    return {
-        type: "stdio",
-        command: "node",
-        args: ["build/index.js"],
-        env: [
-            { key: "MAGICSLIDES_ACCESS_ID", value: accessId },
-        ],
-    };
+// Start the server for local stdio use (when run directly)
+if (require.main === module) {
+    (async () => {
+        const transport = new StdioServerTransport();
+        await server.connect(transport);
+    })().catch((error) => {
+        console.error("Failed to start MCP server:", error);
+        process.exit(1);
+    });
 }
-module.exports = { smitheryStartCommand };
+// Default export for Smithery (stateless server)
+function default_1({ config }) {
+    // Update the ACCESS_ID from config if provided
+    if (config?.MAGICSLIDES_ACCESS_ID) {
+        process.env.MAGICSLIDES_ACCESS_ID = config.MAGICSLIDES_ACCESS_ID;
+    }
+    return server;
+}

@@ -1,12 +1,7 @@
 runtime: typescript
-startCommand:
-  commandFunction: smitheryStartCommand
-  type: stdio
-  configSchema:
-    type: object
-    properties:
-      MAGICSLIDES_ACCESS_ID:
-        type: string
-        description: MagicSlides access ID for creating presentations
-    required:
-      - MAGICSLIDES_ACCESS_ID
+configSchema:
+  type: object
+  properties:
+    MAGICSLIDES_ACCESS_ID:
+      type: string
+      description: MagicSlides access ID for creating presentations
