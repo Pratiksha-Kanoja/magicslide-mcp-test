@@ -51,6 +51,34 @@ const YOUTUBE_TRANSCRIPT_API_URL =
 // Get access_id from environment variable
 const ACCESS_ID = process.env.MAGICSLIDES_ACCESS_ID;
 
+// Available template names
+const AVAILABLE_TEMPLATES = [
+    'ed-bullet-point9',
+    'ed-bullet-point7',
+    'ed-bullet-point6',
+    'ed-bullet-point5',
+    'ed-bullet-point2',
+    'ed-bullet-point4',
+    'Custom gold 1',
+    'custom Dark 1',
+    'custom sync 5',
+    'custom sync 4',
+    'custom sync 6',
+    'custom sync 1',
+    'custom sync 2',
+    'custom sync 3',
+    'custom-ed-7',
+    'custom-ed-8',
+    'custom-ed-9',
+    'pitchdeckorignal',
+    'pitch-deck-3',
+    'pitch-deck-2',
+    'custom-ed-10',
+    'custom-ed-11',
+    'custom-ed-12',
+    'ed-bullet-point1'
+];
+
 // Function to check if a string is a YouTube URL
 function isYoutubeUrl(text: string): boolean {
     const youtubeRegex =
@@ -145,10 +173,13 @@ function parseUserParameters(userText: string): {
         params.model = "gemini";
     }
 
-    if (text.includes("ed-bullet-point2") || text.includes("bullet point 2")) {
-        params.template = "ed-bullet-point2";
-    } else if (text.includes("ed-bullet-point1") || text.includes("bullet point 1")) {
-        params.template = "ed-bullet-point1";
+    // Check if user text mentions any of the available templates
+    for (const template of AVAILABLE_TEMPLATES) {
+        // Check both the exact template name and lowercase version
+        if (text.includes(template.toLowerCase())) {
+            params.template = template;
+            break; // Use the first match found
+        }
     }
 
     if (
@@ -344,7 +375,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
                     userText: {
                         type: "string",
                         description:
-                            "The content for the presentation. Can include specific requirements like model (gpt-4/gemini), template (ed-bullet-point1/ed-bullet-point2), slide count, and whether to include images.",
+                            "The content for the presentation. Can include specific requirements like model (gpt-4/gemini), template (any of: " + AVAILABLE_TEMPLATES.join(', ') + "), slide count, and whether to include images.",
                     },
                     accessId: {
                         type: "string",
